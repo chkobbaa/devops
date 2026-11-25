@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion des Incidents{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <h1><a href="{{ url_for('index') }}">Gestion des Incidents IT</a></h1>
+            <nav>
+                <a href="{{ url_for('index') }}">Liste des incidents</a>
+                <a href="{{ url_for('add_incident') }}" class="btn btn-primary">+ Signaler un incident</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Mini-Projet DevOps &mdash; DSI3</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Gestion des Incidents{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <h2>Liste des incidents signalés</h2>
+    <a href="{{ url_for('add_incident') }}" class="btn btn-primary">Ajouter un incident</a>
+</section>
+
+{% if incidents %}
+<table class="incidents-table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th>Lieu</th>
+            <th>Priorité</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for incident in incidents %}
+        <tr>
+            <td>{{ incident["id"] }}</td>
+            <td>
+                <a href="{{ url_for('incident_detail', incident_id=incident['id']) }}">
+                    {{ incident["titre"] }}
+                </a>
+            </td>
+            <td>{{ incident["lieu"] }}</td>
+            <td>
+                <span class="badge priority-{{ incident['priorite']|lower|replace('é', 'e') }}">
+                    {{ incident["priorite"] }}
+                </span>
+            </td>
+            <td>
+                <span class="badge status-{{ incident['statut']|lower|replace(' ', '-')|replace('é', 'e') }}">
+                    {{ incident["statut"] }}
+                </span>
+            </td>
+            <td class="actions">
+                <a href="{{ url_for('incident_detail', incident_id=incident['id']) }}" class="btn btn-small">Détails</a>
+                <form action="{{ url_for('delete_incident', incident_id=incident['id']) }}" method="post" class="inline-form">
+                    <button type="submit" class="btn btn-small btn-danger">Supprimer</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty-state">Aucun incident signalé pour le moment.</p>
+{% endif %}
+{% endblock %}
